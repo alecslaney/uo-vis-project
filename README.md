@@ -1,5 +1,5 @@
 # Project #2: Visualize Me, Captain!
-## Harmony, Robert, Alec -
+## Harmony, Robert, Alec
 
 # Topic
 
@@ -29,7 +29,9 @@ Metadata Link:  https://data.fs.usda.gov/geodata/edw/edw_resources/meta/S_USA.RE
 
 # Final Design Sketch
 
+The following are all the attributes that our current forest recreation dataset has to offer. 
 
+![image](https://user-images.githubusercontent.com/57730593/79049184-dd0c2580-7bd6-11ea-8ce1-9e0880c41f7d.png)
 
 # GitHub Repository Link
 
