@@ -1,5 +1,5 @@
 # Project #2: Visualize Me, Captain!
-    - Harmony, Robert, Alec -
+## Harmony, Robert, Alec -
 
 # Topic
 
