@@ -1,10 +1,9 @@
-#                               Project #2: Visualize Me, Captain!
-                                      Harmony, Robert, Alec
+# Project #2: Visualize Me, Captain!
+## Harmony, Robert, Alec -
 
 # Topic
 
 We chose to do a Project on the Forest Service and Recreational Activities.  Within our chosen Data Set we can build a map of listed Forests and activities within each forest area. We can also pull data on forest trails and will be able to build a map based on Latitude and Longitude within the U.S.  We also liked this choice as it is updated often.  
-
 
 # Inspiration
 
