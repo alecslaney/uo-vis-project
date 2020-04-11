@@ -33,6 +33,8 @@ The following are all the attributes that our current forest recreation dataset 
 
 ![image](https://user-images.githubusercontent.com/57730593/79049184-dd0c2580-7bd6-11ea-8ce1-9e0880c41f7d.png)
 
+At this time we feel our project would fit into the option using Leaflet and Plotly or the custom "creative" project using D3.js.  We plan to utilize SQL and are still reviewing which additional JS Library we would like to use along with what we would like our final 3 visualiations to look like. 
+
 # GitHub Repository Link
 
 https://github.com/alecslaney/uo-vis-project
