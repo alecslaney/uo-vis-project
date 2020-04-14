@@ -1,15 +1,12 @@
 from flask import Flask, jsonify
-import csv, json
+import pandas as pd
+import json
 
-csv_file_path = "../sql_exploration/Recreation_Opportunities_Feature_Layer.csv"
-json_file_path = "data.json"
+df = pd.read_csv("../data_clean.csv")
+df.to_json("../data.json", orient="index")
 
-data = {}
-with open(csv_file_path, encoding="utf8") as csvFile:
-    csvReader = csv.DictReader(csvFile)
-    for csvRow in csvReader:
-        objectID = csvRow["OBJECTID"]
-        data[objectID] = csvRow
+with open("../data.json") as f:
+  data = json.load(f)
 
 # Creation of flask app
 app = Flask(__name__)
