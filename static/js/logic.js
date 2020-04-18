@@ -50,4 +50,5 @@ for (var index = 0; index < attributes.length; index++) {
   createMap(L.layerGroup(forestMarkers));
 
 // Perform an API call to the National Forest API to get information. Call createMarkers when complete
-d3.json ("features.json", createMarkers)
+d3.json ("features.json", createMarkers);
+}
