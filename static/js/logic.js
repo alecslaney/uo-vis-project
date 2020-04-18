@@ -31,17 +31,24 @@ function createMap(nationalForests) {
   }).addTo(map);
 }
 
+function createMarkers(response) {
 
+var features = response.features.attributes;
 
+var forestMarkers = [];
+
+for (var index = 0; index < attributes.length; index++) {
+  var features = attributes[index];
+
+  var forestMarker = L.marker([attributes.LATITUDE, attributes.LONGITUDE])
+    .bindPopup("<h3>" + attributes.RECAREANAME + "<h3><h3>Forest Name: " + attributes.FORESTNAME + "</h3>");
+
+    forestMarkers.push(forestMarker);
+  }
+
+  // Create a layer group made from the bike markers array, pass it into the createMap function
+  createMap(L.layerGroup(forestMarkers));
 
 // Perform an API call to the National Forest API to get information. Call createMarkers when complete
-//d3.json ("../../data.json, Create Markers");
-
-
-
-  
-  
- 
-  
-  
-  
+d3.json ("https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_RecreationOpportunities_01/MapServer/0/query?where=1%3D1&outFields=RECAREANAME,LONGITUDE,LATITUDE,RECAREAURL,OPEN_SEASON_START,OPEN_SEASON_END,FORESTNAME,RECAREAID,MARKERACTIVITY,MARKERACTIVITYGROUP,RECAREADESCRIPTION,RECPORTAL_UNIT_KEY,FORESTORGCODE,OBJECTID,FEEDESCRIPTION,OPERATIONAL_HOURS,RESERVATION_INFO,RESTRICTIONS,ACCESSIBILITY,OPENSTATUS&returnGeometry=false&outSR=4326&f=json", createMarkers);
+}
