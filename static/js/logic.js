@@ -33,7 +33,7 @@ function createMap(nationalForests) {
 
 function createMarkers(response) {
 
-var features = response.features.attributes;
+var attributes = response.features.attributes;
 
 var forestMarkers = [];
 
