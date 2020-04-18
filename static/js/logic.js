@@ -38,10 +38,10 @@ var attributes = response.features.attributes;
 var forestMarkers = [];
 
 for (var index = 0; index < attributes.length; index++) {
-  var features = attributes[index];
+  var attribute = attributes[index];
 
   var forestMarker = L.marker([attributes.LATITUDE, attributes.LONGITUDE])
-    .bindPopup("<h3>" + attributes.RECAREANAME + "<h3><h3>Forest Name: " + attributes.FORESTNAME + "</h3>");
+    .bindPopup("<h3>" + attribute.RECAREANAME + "<h3><h3>Forest Name: " + attribute.FORESTNAME + "</h3>");
 
     forestMarkers.push(forestMarker);
   }
