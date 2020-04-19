@@ -31,24 +31,31 @@ function createMap(nationalForests) {
   }).addTo(map);
 }
 
-function createMarkers(response) {
+function createMarkers(ForestMarkers) {
 
-var attributes = response.features.attributes;
 
+var ForestMarkers = [
+  //"id", "rec_area_name", "forest_name","lat","long","activity_group","activity","status",
+  //"hours","res_info","fees","restrictions","accessib","url",
+  //"descr","open_season_start","open_season_end","rec_area_id","recportal_unit_key","forest_org_code"
+]
+// Initialize an array to hold Forest Markers
 var forestMarkers = [];
 
-for (var index = 0; index < attributes.length; index++) {
-  var attribute = attributes[index];
-
-  var forestMarker = L.marker([attributes.LATITUDE, attributes.LONGITUDE])
-    .bindPopup("<h3>" + attribute.RECAREANAME + "<h3><h3>Forest Name: " + attribute.FORESTNAME + "</h3>");
-
+// Loop through the array
+for (var i = 0; i < ForestMarkers.length; i++) {
+ 
+  // For each id, create a marker and bind a popup with the id's name  
+  var forestMarker = L.marker([lat, long])
+    .bindPopup("<h3>" + activity_group + "<h3><h3>Forest Name: " + forest_name + "</h3>");
+  
+  // Add the marker to the forestMarkers array
     forestMarkers.push(forestMarker);
   }
 
-  // Create a layer group made from the bike markers array, pass it into the createMap function
+  // Create a layer group made from the forest markers array, pass it into the createMap function
   createMap(L.layerGroup(forestMarkers));
 
-// Perform an API call to the National Forest API to get information. Call createMarkers when complete
-d3.json ("features.json", createMarkers);
+// Perform an API...json...csv call to the National Forest API to get information. Call createMarkers when complete
+d3.csv ("data_clean.csv", createMarkers);
 }
