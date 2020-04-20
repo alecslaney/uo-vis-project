@@ -18,7 +18,7 @@ function createMap(nationalForests) {
       "National Forests": nationalForests
     };
   ​
-    // Create the map object with options
+    // Create the map object with options (Lassen National Park, CA)
     var map = L.map("map-id", {
       center: [40.62, -121.39],
       zoom: 12,

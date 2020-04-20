@@ -64,9 +64,9 @@ function createMarkers(response) {
 ​
     forestmarker.addTo(map)
 ​
-    forestmarker.bindPopup.bindPopup("<h3>" + feature[1].RECAREANAME + "<h3><h3>Forest Name: " + feature[1].FORESTNAME + "</h3>");
+    forestmarker.bindPopup("<h3>" + feature[1].RECAREANAME + "<h3><h3>Forest Name: " + feature[1].FORESTNAME + "</h3>");
 ​
-      forestMarkers.push(forestMarker);
+    forestMarkers.push(forestMarker);
   });
 ​
   // var attributes = response.features.attributes;
