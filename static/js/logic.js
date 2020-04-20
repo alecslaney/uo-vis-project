@@ -55,9 +55,9 @@ function createMap(nationalForests) {
         forestMarkers.push(forestMarker);
     }
   ​
-    // Create a layer group made from the bike markers array, pass it into the createMap function
+    // Create a layer group made from the array, pass it into the createMap function
     createMap(L.layerGroup(forestMarkers));
   }
   ​
-  // Perform an API call to the National Forest API to get information. Call createMarkers when complete
+  // Perform call to the National Forest data to get information. Call createMarkers when complete
   d3.json ("flask/jsons/features.json", createMarkers);
