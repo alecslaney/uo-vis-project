@@ -20,7 +20,7 @@ function createMap(nationalForests) {
   ​
     // Create the map object with options
     var map = L.map("map-id", {
-      center: [40.73, -74.0059],
+      center: [40.62, -121.39],
       zoom: 12,
       layers: [streetmap, nationalForests]
     });
