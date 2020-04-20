@@ -58,7 +58,7 @@ function createMarkers(response) {
 ​
     var forestmarker = L.marker([feature[1].LATITUDE, feature[1].LONGITUDE],{
       icon: {
-        iconUrl: '',
+        iconUrl: 'images/ForestMarker.png',
         iconSize: [40, 40],
         className: "pin-class"
       }
@@ -94,19 +94,19 @@ d3.json("flask/jsons/features.json", createMarkers);
 ​
 ​
 ​
-function createForestMarkersPlease(forestMarkers){// Create the map object with options
-var map = L.map("map-id", {
-  center: [40.73, -74.0059],
-  zoom: 12,
-  layers: [forestMarkers]
-});
+//function createForestMarkersPlease(forestMarkers){// Create the map object with options
+//var map = L.map("map-id", {
+  //center: [40.73, -74.0059],
+  //zoom: 12,
+  //layers: [forestMarkers]
+//});
 ​
-var overlays = {
-  "Forests" : forestmarkers
-}
+//var overlays = {
+  //"Forests" : forestmarkers
+//}
 ​
 ​
-L.control.Layers(baseMaps, overlays,. {
-  collapsed = false
-}).addto(map)
+//L.control.Layers(baseMaps, overlays,. {
+  //collapsed = false
+//}).addto(map)
 ​
