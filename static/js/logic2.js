@@ -3,7 +3,8 @@ var map = L.map("map-id", {
   zoom: 12,
   layers: [forestMarkers]
 });
-​
+
+// Create the tile layer that will be the background of our map​
 L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
   maxZoom: 18,
@@ -12,9 +13,6 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(map);
 ​
 function createMap(nationalForests) {
-​
-  // Create the tile layer that will be the background of our map
-  
 ​
   // Create a baseMaps object to hold the streetmap layer
   var baseMaps = {
