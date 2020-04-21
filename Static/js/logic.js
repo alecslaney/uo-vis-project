@@ -41,10 +41,11 @@ var MARKERACTIVITY = "&MARKERACTIVITY_type=Services";
 var OPENSTATUS = "&OPENSTATUS_type=Services"
 
 // Assemble API query URL
-var url = https//apps.fs.usda.gov/arcx/rest/services/EDW/EDW_RecreationOpportunities_01/MapServer/0/query?where=1%3D1&outFields=RECAREANAME,LONGITUDE,LATITUDE,RECAREAURL,OPEN_SEASON_START,OPEN_SEASON_END,FORESTNAME,RECAREAID,MARKERACTIVITY,MARKERACTIVITYGROUP,RECAREADESCRIPTION,RECPORTAL_UNIT_KEY,FORESTORGCODE,OBJECTID,FEEDESCRIPTION,OPERATIONAL_HOURS,RESERVATION_INFO,RESTRICTIONS,ACCESSIBILITY,OPENSTATUS&returnGeometry=false&outSR=4326&f=json + FORESTNAME + MARKERACTIVITYGROUP + MARKERACTIVITY + OPENSTATUS;
+var url = baseURL + FORESTNAME + MARKERACTIVITYGROUP + MARKERACTIVITY + OPENSTATUS;
 
 // Grab the data with d3
 d3.json(url, function(response) {
+  console.log(response);
 
   // Create a new marker cluster group
   var markers = L.markerClusterGroup();
