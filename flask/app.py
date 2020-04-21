@@ -96,13 +96,14 @@ client = PyMongo(app, uri=conn)
 
 @app.route("/")
 def index():
-    featureExtract()
     return (
         f"Hello! Go to /api to view the data."
     )
 
 @app.route("/api")
 def api_data():
+    featureExtract()
+    
     documents = [doc for doc in client.db.data.find()]
 
     documents = [{**document, '_id': newEncoder(document['_id'])} for document in documents]
