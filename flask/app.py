@@ -1,6 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import json, requests
+import pymongo
+from bson import json_util
 
+# Retrieves full data set from Forest Service, and writes contents to a JSON file.
+# Multiple calls necessary to retrieve full data set.
 def api_call():
 
     count_only = "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_RecreationOpportunities_01/MapServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json&returnCountOnly=true"
@@ -31,10 +35,10 @@ def api_call():
         else:
             print(f"Fetched {offset} records so far...")
 
+# Parses JSON files for feature dictionary, adds it to MongoDB
 def featureExtract():
     i = 0
     file_name = "jsons/api_calls/json0"
-    big_json = {}
     while i < 14:
         with open(file_name) as f:
             d = json.load(f)
@@ -42,34 +46,36 @@ def featureExtract():
             features = d["features"]
             for x in range(len(features)):
                 attribute = features[x]["attributes"]
-                to_add = {attribute["OBJECTID"]: attribute}
-                big_json.update(to_add)
+                collection.insert_one(attribute)
                 x +=1
         i +=1
         file_name = "jsons/api_calls/json" + str(i)
-    
-    to_json = json.dumps(big_json, indent=4, sort_keys=True)
-    with open("jsons/features.json", "w") as f:
-        f.write(to_json)
 
-api_call()
-featureExtract()
-print(f"Complete.")
+# Creation of flask app
+app = Flask(__name__)
 
-# # Creation of flask app
-# app = Flask(__name__)
+# Setting up MongoDB
+conn = 'mongodb://localhost:27017'
+client = pymongo.MongoClient(conn)
 
-# @app.route("/")
-# def index():
-#     return (
-#         f"Index of Data API<br/>"
-#         f"<a href=/api/data>Click here to see the json<br/>"
-#     )
+db = client.forest_db
+collection = db.data
+collection.drop()
 
-# @app.route("/api/data")
-# def apiData():
-#     return to_json
+@app.route("/")
+def index():
+    featureExtract()
+    features = list(collection.find())  
 
-# # Debugger
-# if __name__ == "__main__":
-#     app.run(debug=True)
+    # Return the template with the teams list passed in
+    return render_template('index.html', features=features)
+
+@app.route("/api")
+def api_data():
+    documents = [doc for doc in collection.find()]
+
+    return json_util.dumps({"data": documents})
+
+# Debugger
+if __name__ == "__main__":
+    app.run(debug=True)
