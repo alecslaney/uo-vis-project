@@ -7,12 +7,10 @@ function createMap(nationalForests) {
       id: "mapbox.satellite",
       accessToken: API_KEY
     });
-
     // Create a baseMaps object to hold the streetmap layer
     var baseMaps = {
       "Streets Map": streetmap
     };
-
     // Create an overlayMaps object to hold the nationalForests layer
     var overlayMaps = {
       "National Forests": nationalForests

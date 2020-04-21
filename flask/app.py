@@ -1,6 +1,18 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
+from flask_cors import CORS
 import json, requests
+import pymongo
+from flask_pymongo import PyMongo
+from bson import json_util
+from bson.objectid import ObjectId
 
+def newEncoder(o):
+    if type(o) == ObjectId:
+        return str(o)
+    return o.__str__
+
+# Retrieves full data set from Forest Service, and writes contents to a JSON file.
+# Multiple calls necessary to retrieve full data set.
 def api_call():
 
     count_only = "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_RecreationOpportunities_01/MapServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json&returnCountOnly=true"
@@ -31,45 +43,73 @@ def api_call():
         else:
             print(f"Fetched {offset} records so far...")
 
+# Parses JSON files for feature dictionary, adds it to MongoDB
 def featureExtract():
+    conn = 'mongodb://localhost:27017'
+    client = pymongo.MongoClient(conn)
+
+    db = client.forest_db
+    collection = db.data
+    collection.drop()
+
     i = 0
     file_name = "jsons/api_calls/json0"
-    big_json = {}
     while i < 14:
         with open(file_name) as f:
             d = json.load(f)
             print(f"Accessing {file_name}")
             features = d["features"]
             for x in range(len(features)):
-                attribute = features[x]["attributes"]
-                to_add = {attribute["OBJECTID"]: attribute}
-                big_json.update(to_add)
+                attribute = {}
+                attribute["long"] = float(features[x]["attributes"]["LONGITUDE"])
+                attribute["lat"] = float(features[x]["attributes"]["LATITUDE"])
+                attribute["accessibility"] = features[x]["attributes"]["ACCESSIBILITY"]
+                attribute["fees"] = features[x]["attributes"]["FEEDESCRIPTION"]
+                attribute["forest"] = features[x]["attributes"]["FORESTNAME"]
+                attribute["activity"] = features[x]["attributes"]["MARKERACTIVITY"]
+                attribute["activity_group"] = features[x]["attributes"]["MARKERACTIVITYGROUP"]
+                attribute["status"] = features[x]["attributes"]["OPENSTATUS"]
+                attribute["hours"] = features[x]["attributes"]["OPERATIONAL_HOURS"]
+                attribute["descr"] = features[x]["attributes"]["RECAREADESCRIPTION"]
+                attribute["area_name"] = features[x]["attributes"]["RECAREANAME"]
+                attribute["url"] = features[x]["attributes"]["RECAREAURL"]
+                attribute["res_info"] = features[x]["attributes"]["RESERVATION_INFO"]
+                attribute["restr"] = features[x]["attributes"]["RESTRICTIONS"]
+                attribute["season_start"] = features[x]["attributes"]["OPEN_SEASON_START"]
+                attribute["season_end"] = features[x]["attributes"]["OPEN_SEASON_END"]
+                attribute["id"] = int(features[x]["attributes"]["OBJECTID"])
+                attribute["area_id"] = int(features[x]["attributes"]["RECAREAID"])
+                attribute["forest_id"] = int(features[x]["attributes"]["FORESTORGCODE"])
+                attribute["portal_id"] = int(features[x]["attributes"]["RECPORTAL_UNIT_KEY"])
+                collection.insert_one(attribute)
                 x +=1
         i +=1
         file_name = "jsons/api_calls/json" + str(i)
+
+# Creation of flask app
+app = Flask(__name__)
+CORS(app)
+
+# Setting up MongoDB
+conn = 'mongodb://localhost:27017/forest_db'
+client = PyMongo(app, uri=conn)
+
+@app.route("/")
+def index():
+    return (
+        f"Hello! Go to /api to view the data."
+    )
+
+@app.route("/api")
+def api_data():
+    featureExtract()
     
-    to_json = json.dumps(big_json, indent=4, sort_keys=True)
-    with open("jsons/features.json", "w") as f:
-        f.write(to_json)
+    documents = [doc for doc in client.db.data.find()]
 
-api_call()
-featureExtract()
-print(f"Complete.")
+    documents = [{**document, '_id': newEncoder(document['_id'])} for document in documents]
 
-# # Creation of flask app
-# app = Flask(__name__)
+    return jsonify(documents)
 
-# @app.route("/")
-# def index():
-#     return (
-#         f"Index of Data API<br/>"
-#         f"<a href=/api/data>Click here to see the json<br/>"
-#     )
-
-# @app.route("/api/data")
-# def apiData():
-#     return to_json
-
-# # Debugger
-# if __name__ == "__main__":
-#     app.run(debug=True)
+# Debugger
+if __name__ == "__main__":
+    app.run(debug=True)
