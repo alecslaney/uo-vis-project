@@ -49,14 +49,13 @@ var baseMaps = {
   "Dark": darkMap,
   "Satelite Map" : sateliteMap,
   "Street Map" : streetMap
-  
 };
 
 // Creating map object
 var myMap = L.map("map", {
   center: [39.50, -98.35],
   zoom: 4,
-  layers: [lightMap,streetMap,sateliteMap]
+  layers: [lightMap,darkMap,streetMap,sateliteMap]
 });
 
 // Adding tile layer to the map
@@ -101,11 +100,16 @@ d3.json(url, function(response) {
   var cabinMarkers = [];
   var campMarkers = [];
   var waterMarkers = [];
+  var trailMarkers = [];
+  var winterMarkers = [];
+
 
   var cabinCampCount = 0;
   var cabinCount = 0;
   var campCount = 0;
   var waterCount = 0;
+  var trailCount = 0;
+  var winterCount = 0;
 
   // Loop through data
   for (var i = 0; i < response.length; i++) {
@@ -116,18 +120,39 @@ d3.json(url, function(response) {
     // Check for location property
     // if (location) {
 
-      if(response[i].activity_group === "Camping & Cabins"){
-        cabinCampCount++;
-        var cabinMarker = L.marker([response[i].lat, response[i].long])
+      if(response[i].activity_group === "Cabins"){
+        cabinCount++;
+        var cabinMarker = L.marker([response[i].lat, response[i].long],{
+          icon : L.icon({
+            iconUrl : 'images/cabin.png', 
+            iconSize: [20, 20],
+            className: "cabin-mark-class"
+          })
+        })
         .bindPopup(response[i].descr);
   
-        // cabinMarkers.push(cabinMarker);
+        cabinMarkers.push(cabinMarker);
       }
+
+      if(response[i].activity_group === "Camping"){
+        campingCount++;
+        var campMarker = L.marker([response[i].lat, response[i].long],{
+          icon : L.icon({
+            iconUrl : 'images/camp_site.png', 
+            iconSize: [20, 20],
+            className: "camp-mark-class"
+          })
+        })
+        .bindPopup(response[i].descr);
+  
+        campMarkers.push(campMarker);
+      }
+
       if(response[i].activity_group === "Water Activities"){
         waterCount++;
         var waterMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'static/images/ForestMarker.png',
+            iconUrl : 'images/water.png',
             iconSize: [20, 20],
             className: "wat-mark-class"
           })
@@ -136,6 +161,35 @@ d3.json(url, function(response) {
   
         waterMarkers.push(waterMarker);
       }
+      
+      if(response[i].activity_group === "Trailheads"){
+        trailCount++;
+        var trailMarker = L.marker([response[i].lat, response[i].long],{
+          icon : L.icon({
+            iconUrl : 'images/hiker.png',
+            iconSize: [20, 20],
+            className: "trail-mark-class"
+          })
+        })
+        .bindPopup(response[i].descr);
+  
+        trailMarkers.push(trailMarker);
+      }
+
+      if(response[i].activity_group === "Winter Sports"){
+        winterCount++;
+        var winterMarker = L.marker([response[i].lat, response[i].long],{
+          icon : L.icon({
+            iconUrl : 'images/mountain.png',
+            iconSize: [20, 20],
+            className: "winter-mark-class"
+          })
+        })
+        .bindPopup(response[i].descr);
+  
+        winterMarkers.push(winterMarker);
+      }
+
       if(response[i].activity === "Campground Camping"){
         campCount++;
   
@@ -152,40 +206,57 @@ d3.json(url, function(response) {
   
         cabinMarkers.push(cabinMarker);
       }
+      if(response[i].activity === "Trailhead"){
+        trailCount++;
+  
+        var trailMarker = L.marker([response[i].lat, response[i].long])
+        .bindPopup(response[i].descr);
+  
+        trailMarkers.push(trailMarker);
+      }
 
-      // Add a new marker to the cluster group and bind a pop-up
-      // markers.addLayer(L.marker([response[i].lat, response[i].long])
-      // 		 .bindPopup(response[i].descr));}
+      //Add a new marker to the cluster group and bind a pop-up
+      markers.addLayer(L.marker([response[i].lat, response[i].long])
+          .bindPopup(response[i].descr));
+        }
       
-    markers.addLayer(L.marker([response[i].lat, response[i].long])
-      .bindPopup(response[i].descr));
-  }
+      // markers.addLayer(L.marker([response[i].lat, response[i].long])
+      //     .bindPopup(response[i].descr));
+      //   })
 
-  console.log("WHats the breakdown??????");
+  console.log("WHats the count of each?");
   console.log(campCount);
   console.log(cabinCount);
   console.log(cabinCampCount);
   console.log(waterCount);
+  console.log(trailCount);
+  console.log(winterCount);
 
   // Add our marker cluster layer to the map
   myMap.addLayer(markers);
   myMap.addLayer(L.layerGroup(cabinMarkers));
   myMap.addLayer(L.layerGroup(campMarkers));
   myMap.addLayer(L.layerGroup(waterMarkers));
+  myMap.addLayer(L.layerGroup(trailMarkers));
+  myMap.addLayer(L.layerGroup(winterMarkers));
 
   overlayMaps = {
+    "Camping" : L.layerGroup(campMarkers),
     "Cabins": L.layerGroup(cabinMarkers),
-    "Water Funs" : L.layerGroup(waterMarkers),
-    "Camps" : L.layerGroup(campMarkers),
-    "Cluster Group" : markers
-  };  
+    "Trailhead" : L.layerGroup(trailMarkers), 
+    "Water Sports" : L.layerGroup(waterMarkers),
+    "Winter Sports" : L.layerGroup(winterMarkers),
+    "All Activities" : markers
+  } 
   
   // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
   L.control.layers(baseMaps, overlayMaps, {
     collapsed : false
   }).addTo(myMap);
-  // L.control.layers(baseMaps, overlayMaps2).addTo(myMap);
+  // L.control.layers(baseMaps, overlayMaps2, {
+  //   collapsed : false
+  // }).addTo(myMap);
 
-});
 
-  
+
+  })
