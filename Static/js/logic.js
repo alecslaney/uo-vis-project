@@ -29,7 +29,7 @@ var darkMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?
   accessToken: API_KEY
 });
 
-var sateliteMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+var satelliteMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
   maxZoom: 18,
   id: "mapbox.satellite",
@@ -47,16 +47,16 @@ var streetMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
 var baseMaps = {
   "Light": lightMap,
   "Dark": darkMap,
-  "Satelite Map" : sateliteMap,
+  "Satellite Map" : satelliteMap,
   "Street Map" : streetMap
 };
 
-// Creating map object
-var myMap = L.map("map", {
-  center: [39.50, -98.35],
-  zoom: 4,
-  layers: [lightMap,darkMap,streetMap,sateliteMap]
-});
+// // Creating map object
+// var myMap = L.map("map", {
+//   center: [39.50, -98.35],
+//   zoom: 4,
+//   layers: [lightMap,darkMap,streetMap,satelliteMap]
+// });
 
 // Adding tile layer to the map
 
@@ -93,7 +93,7 @@ var url = "http://localhost:5000/api"
 // url = http://localhost:5000/api
 
 d3.json(url, function(response) {
-  console.log(response);
+  //console.log(response);
 
   // Create a new marker cluster group
   var markers = L.markerClusterGroup();
@@ -113,7 +113,7 @@ d3.json(url, function(response) {
 
   // Loop through data
   for (var i = 0; i < response.length; i++) {
-    console.log(response[i]);
+    //console.log(response[i]);
     // Set the data location property to a variable
     // var location = response[i].location;
 
@@ -236,13 +236,20 @@ d3.json(url, function(response) {
       //     .bindPopup(response[i].descr));
       //   })
 
-  console.log("WHats the count of each?");
-  console.log(campCount);
-  console.log(cabinCount);
-  console.log(cabinCampCount);
-  console.log(waterCount);
-  console.log(trailCount);
-  console.log(winterCount);
+  // console.log("WHats the count of each?");
+  // console.log(campCount);
+  // console.log(cabinCount);
+  // console.log(cabinCampCount);
+  // console.log(waterCount);
+  // console.log(trailCount);
+  // console.log(winterCount);
+
+  //Creating map object
+var myMap = L.map("map", {
+  center: [39.50, -98.35],
+  zoom: 4,
+  layers: [streetMap, markers]
+});
 
   // Add our marker cluster layer to the map
   myMap.addLayer(markers);
