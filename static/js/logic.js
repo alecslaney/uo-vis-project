@@ -94,18 +94,18 @@ d3.json(url, function(response) {
 
     // Check for location property
     // if (location) {
-    if(response[i].activity_group === "Camping & Cabins"){
-      cabinCampCount++;
-      var cabinMarker = L.marker([response[i].lat, response[i].long])
-      .bindPopup(response[i].descr);
+    //if(response[i].activity_group === "Camping & Cabins"){
+      //cabinCampCount++;
+      //var cabinMarker = L.marker([response[i].lat, response[i].long])
+      //.bindPopup(response[i].descr);
 
       // cabinMarkers.push(cabinMarker);
-    }
+    //}
     if(response[i].activity_group === "Water Activities"){
       waterCount++;
       var waterMarker = L.marker([response[i].lat, response[i].long],{
         icon : L.icon({
-          iconUrl : 'images/ForestMarker.png',
+          iconUrl : 'images/water.png',
           iconSize: [20, 20],
           className: "wat-mark-class"
         })
@@ -117,7 +117,13 @@ d3.json(url, function(response) {
     if(response[i].activity === "Campground Camping"){
       campCount++;
 
-      var campMarker = L.marker([response[i].lat, response[i].long])
+      var campMarker = L.marker([response[i].lat, response[i].long],{
+      icon : L.icon({
+        iconUrl : 'images/ForestMarker.png',
+        iconSize: [20, 20],
+        className: "camp-mark-class"
+      })
+    })
       .bindPopup(response[i].descr);
 
       campMarkers.push(campMarker);
@@ -125,7 +131,13 @@ d3.json(url, function(response) {
     if(response[i].activity === "Cabin Rentals"){
       cabinCount++;
 
-      var cabinMarker = L.marker([response[i].lat, response[i].long])
+      var cabinMarker = L.marker([response[i].lat, response[i].long],{
+      icon : L.icon({
+        iconUrl : 'images/cabin.png',
+        iconSize: [20, 20],
+        className: "cabin-mark-class"
+      })
+    })
       .bindPopup(response[i].descr);
 
       cabinMarkers.push(cabinMarker);
