@@ -120,7 +120,7 @@ d3.json(url, function(response) {
     // Check for location property
     // if (location) {
 
-      if(response[i].activity_group === "Cabins"){
+      if(response[i].activity_group === "Camping and Cabins"){
         cabinCount++;
         var cabinMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
@@ -134,11 +134,11 @@ d3.json(url, function(response) {
         cabinMarkers.push(cabinMarker);
       }
 
-      if(response[i].activity_group === "Camping"){
+      if(response[i].activity_group === "Camping and Cabins"){
         campingCount++;
         var campMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/camp_site.png', 
+            iconUrl : 'images/campground.png', 
             iconSize: [20, 20],
             className: "camp-mark-class"
           })
@@ -161,8 +161,8 @@ d3.json(url, function(response) {
   
         waterMarkers.push(waterMarker);
       }
-      
-      if(response[i].activity_group === "Trailheads"){
+
+      if(response[i].activity_group === "Trailhead"){
         trailCount++;
         var trailMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
@@ -193,7 +193,13 @@ d3.json(url, function(response) {
       if(response[i].activity === "Campground Camping"){
         campCount++;
   
-        var campMarker = L.marker([response[i].lat, response[i].long])
+        var campMarker = L.marker([response[i].lat, response[i].long],{
+          icon : L.icon({
+            iconUrl : 'images/campground.png',
+            iconSize: [20,20],
+            className: "camp-mark-class"
+          })
+        })
         .bindPopup(response[i].descr);
   
         campMarkers.push(campMarker);
@@ -201,19 +207,25 @@ d3.json(url, function(response) {
       if(response[i].activity === "Cabin Rentals"){
         cabinCount++;
   
-        var cabinMarker = L.marker([response[i].lat, response[i].long])
+        var cabinMarker = L.marker([response[i].lat, response[i].long],{
+          icon : L.icon({
+            iconUrl : 'images/cabin.png',
+            iconSize: [20,20], 
+            className: "cabin-mark-class"
+          })
+        })
         .bindPopup(response[i].descr);
   
         cabinMarkers.push(cabinMarker);
       }
-      if(response[i].activity === "Trailhead"){
-        trailCount++;
+      // if(response[i].activity === "Trailhead"){
+      //   trailCount++;
   
-        var trailMarker = L.marker([response[i].lat, response[i].long])
-        .bindPopup(response[i].descr);
+      //   var trailMarker = L.marker([response[i].lat, response[i].long])
+      //   .bindPopup(response[i].descr);
   
-        trailMarkers.push(trailMarker);
-      }
+      //   trailMarkers.push(trailMarker);
+      // }
 
       //Add a new marker to the cluster group and bind a pop-up
       markers.addLayer(L.marker([response[i].lat, response[i].long])
