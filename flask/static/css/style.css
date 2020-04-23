@@ -1,0 +1,23 @@
+body {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+
+html{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#map {
+  margin-top: 5% 10%;
+  height: 95%;
+  width: 95%;
+}
