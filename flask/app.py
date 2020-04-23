@@ -5,6 +5,7 @@ from packages import call_api, features, encoder
 
 # Creation of Flask app
 app = Flask(__name__)
+app._static_folder = "static"
 CORS(app)
 
 # Setting up MongoDB

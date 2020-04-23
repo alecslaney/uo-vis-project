@@ -124,7 +124,7 @@ d3.json(url, function(response) {
         cabinCount++;
         var cabinMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : '/images/cabin.png',
+            iconUrl : '../static/images/cabin.png',
             iconSize: [20, 20],
             className: "cabin-mark-class"
           })
@@ -138,7 +138,7 @@ d3.json(url, function(response) {
         campingCount++;
         var campMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/campground.png', 
+            iconUrl : '../static/images/campground.png', 
             iconSize: [20, 20],
             className: "camp-mark-class"
           })
@@ -152,7 +152,7 @@ d3.json(url, function(response) {
         waterCount++;
         var waterMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/water.png',
+            iconUrl : '../static/images/water.png',
             iconSize: [20, 20],
             className: "wat-mark-class"
           })
@@ -166,7 +166,7 @@ d3.json(url, function(response) {
         trailCount++;
         var trailMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/hiker.png',
+            iconUrl : '../static/images/hiker.png',
             iconSize: [20, 20],
             className: "trail-mark-class"
           })
@@ -180,7 +180,7 @@ d3.json(url, function(response) {
         winterCount++;
         var winterMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/mountain.png',
+            iconUrl : '../static/images/mountain.png',
             iconSize: [20, 20],
             className: "winter-mark-class"
           })
@@ -195,7 +195,7 @@ d3.json(url, function(response) {
   
         var campMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/campground.png',
+            iconUrl : '../static/images/campground.png',
             iconSize: [20,20],
             className: "camp-mark-class"
           })
@@ -209,7 +209,7 @@ d3.json(url, function(response) {
   
         var cabinMarker = L.marker([response[i].lat, response[i].long],{
           icon : L.icon({
-            iconUrl : 'images/cabin.png',
+            iconUrl : '../static/images/cabin.png',
             iconSize: [20,20], 
             className: "cabin-mark-class"
           })
